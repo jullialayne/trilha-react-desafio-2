@@ -10,21 +10,21 @@ import { Container } from './styles';
 
 function App() {
 
-  const [currentRepo, setCurrentRepo] = useState('');
-  const [repos, setRepos] = useState([]);
+  const [currentUser, setCurrentUser] = useState('');
+  const [users, setUsers] = useState([]);
 
 
   const handleSearchRepo = async () => {
 
-    const {data} = await api.get(`repos/${currentRepo}`)
+    const {data} = await api.get(`users/${currentUser}`)
 
     if(data.id){
 
-      const isExist = repos.find(repo => repo.id === data.id);
+      const isExist = users.find(repo => repo.id === data.id);
 
       if(!isExist){
-        setRepos(prev => [...prev, data]);
-        setCurrentRepo('')
+        setUsers(prev => [...prev, data]);
+        setCurrentUser('')
         return
       }
 
@@ -33,7 +33,7 @@ function App() {
 
   }
 
-  const handleRemoveRepo = (id) => {
+  const handleRemoveUser = (id) => {
     console.log('Removendo registro', id);
 
     // utilizar filter.
@@ -42,10 +42,10 @@ function App() {
 
   return (
     <Container>
-      <img src={gitLogo} width={72} height={72} alt="github logo"/>
-      <Input value={currentRepo} onChange={(e) => setCurrentRepo(e.target.value)} />
+      
+      <Input value={currentUser} onChange={(e) => setCurrentUser(e.target.value)} />
       <Button onClick={handleSearchRepo}/>
-      {repos.map(repo => <ItemRepo handleRemoveRepo={handleRemoveRepo} repo={repo}/>)}
+      {users.map(user => <ItemRepo handleRemoveUser={handleRemoveUser} user={user}/>)}
     </Container>
   );
 }
